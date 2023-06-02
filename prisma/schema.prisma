@@ -16,7 +16,61 @@ model User {
   email    String @unique
   password String
 
-  created_at DateTime  @default(now())
-  updated_at DateTime  @default(now()) @updatedAt
-  deleted_at DateTime?
+  created_at      DateTime          @default(now())
+  updated_at      DateTime          @default(now()) @updatedAt
+  deleted_at      DateTime?
+  Users_roles     User_role[]
+  User_permission User_permission[]
+
+  @@map("users")
+}
+
+model User_role {
+  id     String @id
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+  role   Role   @relation(fields: [roleId], references: [id])
+  roleId String
+
+  @@map("users_roles")
+}
+
+model User_permission {
+  id           String     @id
+  user         User       @relation(fields: [userId], references: [id])
+  userId       String
+  permission   Permission @relation(fields: [permissionId], references: [id])
+  permissionId String
+
+  @@map("users_permissions")
+}
+
+model Role {
+  id              String            @id
+  name            String            @unique
+  description     String
+  Users_roles     User_role[]
+  Permission_role Permission_role[]
+
+  @@map("roles")
+}
+
+model Permission_role {
+  id           String     @id
+  permission   Permission @relation(fields: [permissionId], references: [id])
+  permissionId String
+  role         Role       @relation(fields: [roleId], references: [id])
+  roleId       String
+
+  @@map("permissions_roles")
+}
+
+model Permission {
+  id              String            @id
+  name            String            @unique
+  description     String
+  User_permission User_permission[]
+  Permission_role Permission_role[]
+
+  @@map("permissions")
 }
