@@ -10,8 +10,8 @@ const permissionsRouter = express.Router()
 permissionsRouter.use(adaptMiddleware(makeEnsureAuthenticatedMiddleware()))
 
 permissionsRouter.post('/', adaptMiddleware(makeEnsureAcessControllMiddleware({
-  Roles: ['suport'],
-  Permissions: ['list_users']
+  Roles: ['admin'],
+  Permissions: ['create_permissions']
 })), adaptRoute(makeRegisterPermissionController()))
 
 export { permissionsRouter }
