@@ -32,6 +32,10 @@ model User_role {
   role   Role   @relation(fields: [roleId], references: [id])
   roleId String
 
+  created_at DateTime  @default(now())
+  updated_at DateTime  @default(now()) @updatedAt
+  deleted_at DateTime?
+
   @@map("users_roles")
 }
 
@@ -41,6 +45,10 @@ model User_permission {
   userId       String
   permission   Permission @relation(fields: [permissionId], references: [id])
   permissionId String
+
+  created_at DateTime  @default(now())
+  updated_at DateTime  @default(now()) @updatedAt
+  deleted_at DateTime?
 
   @@map("users_permissions")
 }
@@ -52,6 +60,10 @@ model Role {
   Users_roles     User_role[]
   Permission_role Permission_role[]
 
+  created_at DateTime  @default(now())
+  updated_at DateTime  @default(now()) @updatedAt
+  deleted_at DateTime?
+
   @@map("roles")
 }
 
@@ -62,6 +74,10 @@ model Permission_role {
   role         Role       @relation(fields: [roleId], references: [id])
   roleId       String
 
+  created_at DateTime  @default(now())
+  updated_at DateTime  @default(now()) @updatedAt
+  deleted_at DateTime?
+
   @@map("permissions_roles")
 }
 
@@ -71,6 +87,10 @@ model Permission {
   description     String
   User_permission User_permission[]
   Permission_role Permission_role[]
+
+  created_at DateTime  @default(now())
+  updated_at DateTime  @default(now()) @updatedAt
+  deleted_at DateTime?
 
   @@map("permissions")
 }
