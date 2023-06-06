@@ -22,6 +22,8 @@ export class EnsureAcessControllMiddleware implements Middleware{
         }
       })
 
+      console.log(userRoles)
+
       //Verifique se o usuario possui alguma das permissoes requeridas
       const userPermissions = await prisma.user_permission.findMany({
         where: {
