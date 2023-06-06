@@ -39,7 +39,7 @@ export class RegisterPermission {
 
     const permission = permissionOrError.value
 
-    const permissionAlreadyExists = await this.permissionRepository.exists(permission.id)
+    const permissionAlreadyExists = await this.permissionRepository.exists(permission.name.value)
 
     if (permissionAlreadyExists) {
       return left(new PermissionAlreadyExistsError(permission.name.value))

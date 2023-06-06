@@ -29,6 +29,7 @@ export class PrismaPermissionRepository implements IPermissionRepository{
   async save(permission: Permission): Promise<void> {
     throw new Error("Method not implemented.");
   }
+  
   async create(permission: Permission): Promise<void> {
     const data = await PermissionMapper.toPersistence(permission)
 
