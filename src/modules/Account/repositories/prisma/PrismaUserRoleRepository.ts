@@ -1,5 +1,6 @@
 import { prisma } from "@infra/prisma/client";
 import { UserRole } from "@modules/Account/domain/UserRole/userRole";
+import { UserRoleMapper } from "@modules/Account/mappers/userRoleMapper";
 import { IUserRoleRepository } from "../IUserRoleRepository";
 
 export class PrismaUserRoleRepository implements IUserRoleRepository{
@@ -17,8 +18,10 @@ export class PrismaUserRoleRepository implements IUserRoleRepository{
     return userRoles.length >= 1 ? true: false
   }
   
-  create(userRole: UserRole): Promise<void> {
-    throw new Error("Method not implemented.");
+  async create(userRole: UserRole): Promise<void> {
+    const data = await UserRoleMapper.toPersistence(userRole)
+
+    await prisma.user_role.create({data})
   }
   
 }
