@@ -22,13 +22,13 @@ export class EnsureAuthenticatedMiddleware implements Middleware {
   ): Promise<HttpResponse> {
     try {
       const { authorization } = request
-
+      
+      
       const acessToken = authorization.split(' ')[1]
 
       if (acessToken) {
         try {
           const decoded = decode(acessToken) as DecodedJwt
-
           return ok({ userId: decoded.sub })
         } catch (err) {
           return forbidden(new AccessDeniedError())
@@ -41,9 +41,9 @@ export class EnsureAuthenticatedMiddleware implements Middleware {
     }
   }
 }
-
+/*
 export namespace AuthMiddleware {
   export type Request = {
     accessToken?: string
   }
-}
+}*/
