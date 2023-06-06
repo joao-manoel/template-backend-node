@@ -3,7 +3,7 @@ import { User } from "@modules/Account/domain/user/user";
 import { UserMapper } from "@modules/Account/mappers/userMapper";
 import { IUserRepository } from "../IUserRepository";
 
-export class PrismaUserRepository implements IUserRepository{
+export class PrismaUsersRepository implements IUserRepository{
 
   async exists(email: string): Promise<boolean> {
     const userExists = await prisma.user.findUnique({

@@ -38,8 +38,10 @@ export class Password {
 
     if (this.hashed) {
       hashed = this.password
+      const comp = bcrypt.compare(plainTextPassword, hashed)
 
-      return await bcrypt.compare(plainTextPassword, hashed)
+      
+      return await comp
     }
 
     return this.password === plainTextPassword
@@ -47,7 +49,7 @@ export class Password {
 
   static create(
     password: string,
-    hashed: boolean = false
+    hashed: boolean = true
   ): Either<InvalidPasswordLengthError, Password> {
     if (!hashed && !this.validate(password)) {
       return left(new InvalidPasswordLengthError())
