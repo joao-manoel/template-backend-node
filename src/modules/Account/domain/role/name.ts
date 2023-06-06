@@ -13,7 +13,7 @@ export class Name {
   }
 
   static validate(name: string): boolean {
-    if (!name || name.trim().length < 2 || name.trim().length > 30) {
+    if (!name || name.trim().length < 2 || name.trim().length > 30 || /\s/.test(name) || /[A-Z]/.test(name)) {
       return false
     }
 
