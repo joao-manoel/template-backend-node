@@ -1,22 +1,19 @@
-import { Controller } from "@core/infra/Controller";
-import { HttpResponse, clientError, conflict, created, fail } from "@core/infra/HttpResponse";
-import { RegisterPermission } from "./RegisterPermission";
-import { PermissionAlreadyExistsError } from "./errors/permissionAlreadyExistsError";
+import { Controller } from "@core/infra/Controller"
+import { HttpResponse, clientError, conflict, created, fail } from "@core/infra/HttpResponse"
+import { RegisterPermission } from "./RegisterPermission"
+import { PermissionAlreadyExistsError } from "./errors/permissionAlreadyExistsError"
 
 type RegisterPermissionControllerRequest = {
   name: string
   description: string
 }
 
-export class RegisterPermissionController implements Controller{
-
-  constructor(
-    private registerPermission: RegisterPermission
-  ){}
-
+export class RegisterPermissionController implements Controller {
+  constructor(private registerPermission: RegisterPermission) { }
+  
   async handle(request: RegisterPermissionControllerRequest): Promise<HttpResponse>{
     try {
-      const { name, description } = request
+      const { name, description } = request 
 
       const result = await this.registerPermission.execute({
         name, description
@@ -28,7 +25,7 @@ export class RegisterPermissionController implements Controller{
         switch (error.constructor) {
           case PermissionAlreadyExistsError:
             return conflict(error)
-          default:
+          default: 
             return clientError(error)
         }
       } else {
@@ -38,5 +35,4 @@ export class RegisterPermissionController implements Controller{
       return fail(err)
     }
   }
-  
 }

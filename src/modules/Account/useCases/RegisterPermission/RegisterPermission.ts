@@ -11,12 +11,12 @@ type RegisterPermissionResponse = Either<
   | InvalidNameError
   | InvalidDescriptionError,
   Permission
->
+  >
 
 export class RegisterPermission {
   constructor(private permissionRepository: IPermissionRepository) { }
   
-  async execute({ name, description }): Promise<RegisterPermissionResponse> {
+  async execute({  name, description }): Promise<RegisterPermissionResponse> {
     const nameOrError = Name.create(name)
     const descriptionOrError = Description.create(description)
 
@@ -37,16 +37,16 @@ export class RegisterPermission {
       return left(permissionOrError.value)
     }
 
-    const permission = permissionOrError.value
+    const permissio = permissionOrError.value
 
-    const permissionAlreadyExists = await this.permissionRepository.exists(permission.name.value)
+    const permissioAlreadyExists = await this.permissionRepository.exists(permissio.name.value)
 
-    if (permissionAlreadyExists) {
-      return left(new PermissionAlreadyExistsError(permission.name.value))
+    if (permissioAlreadyExists) {
+      return left(new PermissionAlreadyExistsError(permissio.name.value))
     }
 
-    await this.permissionRepository.create(permission)
+    await this.permissionRepository.create(permissio)
 
-    return right(permission)
+    return right(permissio)
   }
 }

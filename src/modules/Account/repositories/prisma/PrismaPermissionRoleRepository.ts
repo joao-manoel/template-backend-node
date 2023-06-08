@@ -6,7 +6,7 @@ import { IPermissionRoleRepository } from "../IPermissionRoleRepository";
 export class PrismaPermissionRoleRepository implements IPermissionRoleRepository{
   async exists(permissionNames: string[], roleId: string): Promise<boolean> {
     //Verifique se o usuario possui algum dos cargos requeridos
-    const permissionRoles = await prisma.permission_role.findMany({
+    const permissionRoles = await prisma.permissionRole.findMany({
       where: {
         roleId,
         permission: {
@@ -21,7 +21,7 @@ export class PrismaPermissionRoleRepository implements IPermissionRoleRepository
   async create(permissionRole: PermissionRole): Promise<void> {
     const data = await PermissionRoleMapper.toPersistence(permissionRole)
 
-    await prisma.permission_role.create({data})
+    await prisma.permissionRole.create({data})
   }
   
 }

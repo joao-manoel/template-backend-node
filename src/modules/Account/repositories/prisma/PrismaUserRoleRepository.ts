@@ -6,7 +6,7 @@ import { IUserRoleRepository } from "../IUserRoleRepository";
 export class PrismaUserRoleRepository implements IUserRoleRepository{
   async exists(names: string[], userId: string): Promise<boolean> {
     //Verifique se o usuario possui algum dos cargos requeridos
-    const userRoles = await prisma.user_role.findMany({
+    const userRoles = await prisma.roleUser.findMany({
       where: {
         userId,
         role: {
@@ -21,7 +21,7 @@ export class PrismaUserRoleRepository implements IUserRoleRepository{
   async create(userRole: UserRole): Promise<void> {
     const data = await UserRoleMapper.toPersistence(userRole)
 
-    await prisma.user_role.create({data})
+    await prisma.roleUser.create({data})
   }
   
 }

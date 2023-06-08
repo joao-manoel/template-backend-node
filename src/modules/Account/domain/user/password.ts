@@ -49,7 +49,7 @@ export class Password {
 
   static create(
     password: string,
-    hashed: boolean = true
+    hashed: boolean
   ): Either<InvalidPasswordLengthError, Password> {
     if (!hashed && !this.validate(password)) {
       return left(new InvalidPasswordLengthError())

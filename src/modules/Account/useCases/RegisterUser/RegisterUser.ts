@@ -23,7 +23,7 @@ export class RegisterUser {
   async execute({ username, email, password }): Promise<RegisterUserResponse> {
     const usernameOrError = Username.create(username)
     const emailOrError = Email.create(email)
-    const passwordOrError = Password.create(password)
+    const passwordOrError = Password.create(password, false)
 
     if (usernameOrError.isLeft()) {
       return left(usernameOrError.value)

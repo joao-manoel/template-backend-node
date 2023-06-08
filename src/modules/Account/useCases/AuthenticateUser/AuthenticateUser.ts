@@ -21,6 +21,7 @@ export class AuthenticateUser {
     const user = await this.usersRepository.findByEmail(email)
 
     if (!user) return left(new InvalidEmailOrPasswordError())
+    console.log(password)
     
     const isPasswordValid = await user.password.comparePassword(password)
 
