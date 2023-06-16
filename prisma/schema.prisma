@@ -25,30 +25,28 @@ model User {
 }
 
 model Role {
-  id          String       @id
-  name        String       @unique
+  id          String           @id
+  name        String           @unique
   description String
-  Users       RoleUser[]
-  Permissions Permission[]
-
-  created_at  DateTime         @default(now())
-  updated_at  DateTime         @default(now()) @updatedAt
-  deleted_at  DateTime?
+  users       RoleUser[]
   permissions PermissionRole[]
+
+  created_at DateTime  @default(now())
+  updated_at DateTime  @default(now()) @updatedAt
+  deleted_at DateTime?
 
   @@map("roles")
 }
 
 model Permission {
-  id          String @id
-  name        String @unique
+  id          String           @id
+  name        String           @unique
   description String
-  Roles       Role[]
+  roles       PermissionRole[]
 
-  created_at DateTime         @default(now())
-  updated_at DateTime         @default(now()) @updatedAt
+  created_at DateTime  @default(now())
+  updated_at DateTime  @default(now()) @updatedAt
   deleted_at DateTime?
-  roles      PermissionRole[]
 
   @@map("permissions")
 }

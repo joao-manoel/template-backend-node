@@ -34,6 +34,5 @@ export class PrismaRoleRepository implements IRoleRepository{
     const data = await RoleMapper.toPersistence(role)
 
     await prisma.role.create({data})
-  }
-  
+  }  
 }

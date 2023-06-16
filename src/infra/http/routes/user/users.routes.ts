@@ -8,8 +8,7 @@ import { roleRouter } from './role/role.route'
 const usersRouter = express.Router()
 
 usersRouter.post('/', adaptRoute(makeRegisterUserController()))
-
-usersRouter.use('/permissions', permissionsRouter)
+usersRouter.use('/permissions/', permissionsRouter)
 usersRouter.use('/roles', roleRouter)
 
 export { usersRouter }

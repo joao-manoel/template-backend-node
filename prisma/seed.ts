@@ -8,14 +8,15 @@ const prisma = new PrismaClient()
 
 async function main() {
   
+  /*
   await prisma.permissionRole.deleteMany()
   await prisma.roleUser.deleteMany()
   await prisma.permission.deleteMany()
   await prisma.role.deleteMany()
-  await prisma.user.deleteMany()
+  await prisma.user.deleteMany()*/
   
 
-  const execut = true
+  const execut = false
   if (execut) {
       //cria as permissoes
     for (let permission of permissions) {
