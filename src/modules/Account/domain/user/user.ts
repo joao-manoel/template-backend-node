@@ -1,8 +1,6 @@
 import { Entity } from "@core/domain/Entity";
 import { Either, right } from "@core/logic/Either";
 
-import { Permission } from "../permission/permission";
-import { Role } from "../role/role";
 import { Email } from "./email";
 import { InvalidEmailError } from "./errors/InvalidEmailError";
 import { InvalidPasswordLengthError } from "./errors/InvalidPasswordLengthError";
@@ -14,14 +12,7 @@ interface IUserProps {
   username: Username
   email: Email
   password: Password
-  roles?: {
-    role: Role & {      
-      permissions: {
-        permission: Permission
-    }[];
-      
-    };
-  }[];
+  roles?: []
 }
 
 export class User extends Entity<IUserProps>{

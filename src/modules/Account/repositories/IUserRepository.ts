@@ -8,4 +8,5 @@ export interface IUserRepository {
   findByIdWithRoleAndPermission(id: string): Promise<UserWithRoleAndPermission>
   save(user: User): Promise<void>
   create(user: User): Promise<void>
+  findAll(skip: number, take: number): Promise<any>
 }

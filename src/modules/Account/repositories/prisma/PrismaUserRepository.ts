@@ -1,11 +1,43 @@
 import { prisma } from "@infra/prisma/client";
 import { User } from "@modules/Account/domain/user/user";
 import { UserWithRoleAndPermission } from "@modules/Account/dtos/UserWithRoleAndPermission";
-import { UserWithRoleAndPermissionMapper } from "@modules/Account/mappers/UserWithRoleAndPermissionMapper";
+import { UserWithRoleAndPermissionList } from "@modules/Account/dtos/UserWithRoleAndPermissionList";
+import { UserWithRoleAndPermissionListMapper } from "@modules/Account/mappers/UserWithRoleAndPermissionListMapper";
 import { UserMapper } from "@modules/Account/mappers/userMapper";
 import { IUserRepository } from "../IUserRepository";
+import { UserWithRoleAndPermissionMapper } from './../../mappers/UserWithRoleAndPermissionMapper';
 
 export class PrismaUsersRepository implements IUserRepository{
+
+  async findAll(skip: number, take: number): Promise<UserWithRoleAndPermissionList>{
+    const [users, total] = await prisma.$transaction([
+      prisma.user.findMany({
+        include: {
+          roles: {
+            include: {
+              role: {
+                include: {
+                  permissions: {
+                    include: {
+                      permission: true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        skip,
+        take
+      }),
+      prisma.user.count()
+    ])
+
+    const totalPage = Math.ceil(total / take)
+    return UserWithRoleAndPermissionListMapper.toDto({
+      total, totalPage, users
+    })
+  }
 
   async exists(email: string): Promise<boolean> {
     const userExists = await prisma.user.findUnique({
