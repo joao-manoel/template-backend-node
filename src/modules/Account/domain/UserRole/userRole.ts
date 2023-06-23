@@ -1,5 +1,6 @@
 import { Entity } from "@core/domain/Entity";
-import { Either, right } from "@core/logic/Either";
+import { Either, left, right } from "@core/logic/Either";
+import { RoleIdAndUserIdRequiredError } from "./errors/RoleIdAndUserIdRequiredError";
 
 interface IUserRoleProps {
   userId: string
@@ -18,7 +19,20 @@ export class UserRole extends Entity<IUserRoleProps> {
     super(props, id)
   }
 
+  static validate(userId, roleId) {
+    if (userId === undefined || roleId === undefined) {
+      return false
+    }
+
+    return true
+  }
+
   static create(props: IUserRoleProps, id?: string): Either<Error, UserRole>{
+
+    if (!this.validate(props.userId, props.roleId)) {
+      return left(new RoleIdAndUserIdRequiredError())
+    }
+
     const userRole = new UserRole(props, id)
 
     return right(userRole)
