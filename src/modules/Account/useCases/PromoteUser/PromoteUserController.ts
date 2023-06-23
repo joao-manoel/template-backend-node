@@ -3,7 +3,7 @@ import { HttpResponse, clientError, conflict, created, fail, notFound, ok } from
 import { RoleNotFoundError } from "@modules/Account/errors/RoleNotFoundError";
 import { UserNotFoundError } from "@modules/Account/errors/UserNotFoundError";
 import { PromoteUser } from "./PromoteUser";
-import { RoleAlreadyExistsError } from "./errors/RoleAlreadyAssignedError";
+import { AssignmentRoleUserAlreadyExistsError } from "./errors/AssignmentRoleUserAlreadyExistsError";
 
 
 type PromoteUserRequest = {
@@ -28,7 +28,7 @@ export class PromoteUserController implements Controller{
         const error = result.value
 
         switch (error.constructor) {
-          case RoleAlreadyExistsError:
+          case AssignmentRoleUserAlreadyExistsError:
             return conflict(error)
           case UserNotFoundError:
           case RoleNotFoundError:

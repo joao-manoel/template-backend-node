@@ -1,11 +1,12 @@
 import { Either, left, right } from "@core/logic/Either";
+import { RoleIdAndUserIdRequiredError } from "@modules/Account/domain/UserRole/errors/RoleIdAndUserIdRequiredError";
 import { UserRole } from "@modules/Account/domain/UserRole/userRole";
 import { RoleNotFoundError } from "@modules/Account/errors/RoleNotFoundError";
 import { UserNotFoundError } from "@modules/Account/errors/UserNotFoundError";
 import { IRoleRepository } from "@modules/Account/repositories/IRoleRepository";
 import { IUserRepository } from "@modules/Account/repositories/IUserRepository";
 import { IUserRoleRepository } from "@modules/Account/repositories/IUserRoleRepository";
-import { RoleAlreadyExistsError } from "./errors/RoleAlreadyAssignedError";
+import { AssignmentRoleUserAlreadyExistsError } from "./errors/AssignmentRoleUserAlreadyExistsError";
 
 type PromoteUserRequest = {
   userId: string
@@ -13,7 +14,7 @@ type PromoteUserRequest = {
 }
 
 type PromoteUserResponse = Either<
-  | RoleAlreadyExistsError
+  | AssignmentRoleUserAlreadyExistsError
   | UserNotFoundError
   | RoleNotFoundError
   , UserRole>
@@ -27,7 +28,9 @@ export class PromoteUser {
   
   async execute({ userId, roleId }: PromoteUserRequest): Promise<PromoteUserResponse>{
 
-    
+    if (!userId || !roleId) {
+      return left(new RoleIdAndUserIdRequiredError())
+    }
 
     //busca o usuario com o id
     const userExist = await this.userRepository.findById(userId)
@@ -60,7 +63,7 @@ export class PromoteUser {
 
     //Verifica se existe
     if (promoteAlreadyExists) {
-      return left(new RoleAlreadyExistsError())
+      return left(new AssignmentRoleUserAlreadyExistsError())
     }
 
     //Regista no banco de dados o registro
