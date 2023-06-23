@@ -7,5 +7,5 @@
 - [x]  Criar Permissões
 - [x]  Criar Cargo
 - [x]  Middleware de Controle de Acesso
-- [ ]  Atribuir Permissões ao Cargo 
+- [x]  Atribuir Permissões ao Cargo 
 - [x]  Atribuir Cargo ao Usuario
