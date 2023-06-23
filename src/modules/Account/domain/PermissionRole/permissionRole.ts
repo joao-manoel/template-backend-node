@@ -1,5 +1,6 @@
 import { Entity } from "@core/domain/Entity"
-import { Either, right } from "@core/logic/Either"
+import { Either, left, right } from "@core/logic/Either"
+import { PermissionIdAndRoleIdRequiredError } from "./errors/PermissionIdAndRoleIdRequiredError"
 
 interface IPermissionRoleProps {
   roleId: string
@@ -15,12 +16,25 @@ export class PermissionRole extends Entity<IPermissionRoleProps>{
     return this.props.permissionId
   }
 
-  private constructor(props: IPermissionRoleProps, id?: string) {
-    super(props, id)
+  private constructor(props: IPermissionRoleProps) {
+    super(props)
+  }
+
+  static validate(permissionId: string, roleId: string) {
+    if (permissionId === undefined || roleId === undefined) {
+      return false
+    }
+
+    return true
   }
 
   static create(props: IPermissionRoleProps, id?: string): Either<Error, PermissionRole>{
-    const userRole = new PermissionRole(props, id)
+
+    if (!this.validate(props.permissionId, props.roleId)) {
+      return left(new PermissionIdAndRoleIdRequiredError())
+    }
+
+    const userRole = new PermissionRole(props)
 
     return right(userRole)
   }

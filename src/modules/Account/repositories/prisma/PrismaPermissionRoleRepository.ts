@@ -4,7 +4,21 @@ import { PermissionRoleMapper } from "@modules/Account/mappers/permissionRoleMap
 import { IPermissionRoleRepository } from "../IPermissionRoleRepository";
 
 export class PrismaPermissionRoleRepository implements IPermissionRoleRepository{
-  async exists(permissionNames: string[], roleId: string): Promise<boolean> {
+
+  async exists(permissionId: string, roleId: string): Promise<boolean>{
+    const permissionRoleExist = await prisma.permissionRole.findUnique({
+      where: {
+        roleId_permissionId: {
+          permissionId,
+          roleId
+        }
+      }
+    })
+
+    return !!permissionRoleExist
+  }
+
+  async PermissionRoleExists(permissionNames: string[], roleId: string): Promise<boolean> {
     //Verifique se o usuario possui algum dos cargos requeridos
     const permissionRoles = await prisma.permissionRole.findMany({
       where: {
