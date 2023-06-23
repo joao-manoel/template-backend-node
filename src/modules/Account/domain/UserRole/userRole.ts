@@ -19,7 +19,7 @@ export class UserRole extends Entity<IUserRoleProps> {
     super(props, id)
   }
 
-  static validate(userId, roleId) {
+  static validate(userId: string, roleId: string) {
     if (userId === undefined || roleId === undefined) {
       return false
     }
