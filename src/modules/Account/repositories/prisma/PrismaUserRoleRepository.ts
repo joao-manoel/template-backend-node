@@ -4,7 +4,21 @@ import { UserRoleMapper } from "@modules/Account/mappers/userRoleMapper";
 import { IUserRoleRepository } from "../IUserRoleRepository";
 
 export class PrismaUserRoleRepository implements IUserRoleRepository{
-  async exists(names: string[], userId: string): Promise<boolean> {
+
+  async exists(userId: string, roleId: string): Promise<boolean>{
+    const userRoleExists = await prisma.roleUser.findUnique({
+      where: {
+        roleId_userId: {
+          roleId,
+          userId
+        }
+      }
+    })
+
+    return !!userRoleExists
+  }
+
+  async UserRoleExists(names: string[], userId: string): Promise<boolean> {
     //Verifique se o usuario possui algum dos cargos requeridos
     const userRoles = await prisma.roleUser.findMany({
       where: {

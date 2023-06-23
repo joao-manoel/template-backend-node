@@ -8,7 +8,6 @@ export type UserWithRoleAndPermission = {
       name: string
       description: string
     }>
-      
   }>
   
 }
