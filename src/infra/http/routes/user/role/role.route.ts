@@ -9,19 +9,13 @@ import express from 'express'
 const roleRouter = express.Router()
 roleRouter.use(adaptMiddleware(makeEnsureAuthenticatedMiddleware()))
 
-roleRouter.post('/',
-  adaptMiddleware(makeEnsureAcessControllMiddleware({
-    permissions: ['create_roles']
-  })),
-  adaptRoute(makeRegisterRoleController())
-)
+roleRouter.use(adaptMiddleware(makeEnsureAcessControllMiddleware({
+    permissions: ['manage_roles']
+})))
+  
+roleRouter.post('/', adaptRoute(makeRegisterRoleController()))
 
-roleRouter.post('/permission', 
-  adaptMiddleware(makeEnsureAcessControllMiddleware({
-    permissions: ['assign_permissions']
-  })),
-  adaptRoute(makeAssignPermissionToRoleController())
-)
+roleRouter.post('/permission', adaptRoute(makeAssignPermissionToRoleController()))
 
 export { roleRouter }
 

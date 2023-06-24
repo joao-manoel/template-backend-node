@@ -1,15 +1,15 @@
 export const permissions = [
   {
-    name: 'create_roles',
-    description: 'Criar Cargos'
+    name: 'manage_roles',
+    description: 'Gerenciar Cargos'
   },
   {
-    name: 'create_new_user',
-    description: 'Criar Usuários'
+    name: 'manage_permissions',
+    description: 'Gerenciar Permissões'
   },
   {
-    name: 'delete_user',
-    description: 'Deletar Usuários'
+    name: 'manage_users',
+    description: 'Gerenciar Usuários'
   }
 ]
 
