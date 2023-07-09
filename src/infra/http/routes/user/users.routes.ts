@@ -12,7 +12,6 @@ const usersRouter = express.Router()
 usersRouter.post('/', adaptRoute(makeRegisterUserController()))
 usersRouter.get('/', adaptRoute(makeGetUsersController()))
 
-
 usersRouter.use('/permissions/', permissionsRouter)
 usersRouter.use('/roles', roleRouter)
 usersRouter.use('/promote', promoteRouter)

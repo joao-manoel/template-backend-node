@@ -7,7 +7,7 @@ import { AssignmentRoleUserAlreadyExistsError } from "./errors/AssignmentRoleUse
 
 
 type PromoteUserRequest = {
-  forUserId: string
+  targetUserId: string
   roleId: string
 }
 
@@ -17,10 +17,12 @@ export class PromoteUserController implements Controller{
 
   async handle(request: PromoteUserRequest): Promise<HttpResponse> {
     try {
-      const { forUserId, roleId } = request
+      const { targetUserId, roleId } = request
+
+      console.log(request)
       
       const result = await this.promoteUser.execute({
-        userId: forUserId,
+        userId: targetUserId,
         roleId,
       })
 

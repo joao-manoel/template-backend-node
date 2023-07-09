@@ -22,9 +22,9 @@ export class AuthenticateUserController implements Controller {
 
         return clientError(error)
       } else {
-        const { token } = result.value
+        const { username, roles, token } = result.value
         
-        return ok({token})
+        return ok({username, roles, token})
       }
     } catch (err) {
       return fail(err)

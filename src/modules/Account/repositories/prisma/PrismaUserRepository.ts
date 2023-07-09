@@ -51,13 +51,10 @@ export class PrismaUsersRepository implements IUserRepository{
     const user = await prisma.user.findUnique({
       where: { email }
     })
-
-
+    
     if (!user) {
       return null
     }
-
-    
 
     return UserMapper.toDomain(user)
   }
@@ -81,6 +78,33 @@ export class PrismaUsersRepository implements IUserRepository{
     const user = await prisma.user.findUnique({
       where: {
         id
+      },
+      include: {
+        roles: {
+          include: {
+            role: {
+              include: {
+                permissions: {
+                  include: {
+                    permission: true
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    })    
+
+    if (!user) return null
+    
+    return UserWithRoleAndPermissionMapper.toDto(user)
+  }
+
+  async findByEmailWithRoleAndPermission(email: string): Promise<UserWithRoleAndPermission> {
+    const user = await prisma.user.findUnique({
+      where: {
+        email
       },
       include: {
         roles: {

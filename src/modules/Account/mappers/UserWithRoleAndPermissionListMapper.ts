@@ -1,15 +1,5 @@
 import { Permission, PermissionRole, Role, RoleUser, User } from "@prisma/client";
 import { UserWithRoleAndPermissionList } from "../dtos/UserWithRoleAndPermissionList";
-/*
-type PersistenceRaw = User &{
-  roles: (RoleUser & {
-    role: (Role & {
-      permissions: (PermissionRole & {
-        permission: Permission
-      })[]
-    })
-  })[]
-}*/
 
 type PersistenceRaw = {
   total: number

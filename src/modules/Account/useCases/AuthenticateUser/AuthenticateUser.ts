@@ -3,7 +3,16 @@ import { JWT } from "@modules/Account/domain/user/jwt";
 import { IUserRepository } from "@modules/Account/repositories/IUserRepository";
 import { InvalidEmailOrPasswordError } from "./errors/InvalidEmailOrPasswordError";
 
-type TokenResponse = {
+type AuthenticateResponse = {
+  username: string,
+  roles: {
+    name: string
+    description: string
+    permissions: {
+      name: string
+      description: string
+    }[]
+  }[]
   token: string
 }
 
@@ -12,7 +21,7 @@ type AuthenticateUserRequest = {
   password: string
 }
 
-type AuthenticateUserResponse = Either<InvalidEmailOrPasswordError, TokenResponse >
+type AuthenticateUserResponse = Either<InvalidEmailOrPasswordError, AuthenticateResponse >
 
 export class AuthenticateUser {
   constructor(private usersRepository: IUserRepository) { }
@@ -26,8 +35,17 @@ export class AuthenticateUser {
 
     if (!isPasswordValid) return left(new InvalidEmailOrPasswordError())
     
+    const userPermissionAndRoleAndPermission = await this.usersRepository.findByIdWithRoleAndPermission(user.id)
+
+    const roles = userPermissionAndRoleAndPermission.roles
+    const username = userPermissionAndRoleAndPermission.username
+
     const { token } = JWT.signUser(user)
     
-    return right({token})
+    return right({
+      username,
+      roles,
+      token
+    })
   }
 }

@@ -15,6 +15,7 @@ export class UserWithRoleAndPermissionMapper {
     return {
       username: raw.username,
       email: raw.email,
+      password: raw.password,
       roles: raw.roles.map(role => {
         return {
           name: role.role.name,
