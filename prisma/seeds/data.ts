@@ -22,7 +22,7 @@ export const roles = [
 
 export const users = [
   {
-    username: 'administrador',
+    username: 'user administrator',
     email: 'adm@domain.com',
     password: '123456'
   }
