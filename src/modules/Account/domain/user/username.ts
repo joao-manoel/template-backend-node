@@ -13,7 +13,7 @@ export class Username {
   }
 
   static validate(username: string): boolean {
-    if (!username || username.trim().length < 2 || username.trim().length > 17) {
+    if (!username || username.trim().length < 2 || username.trim().length > 32) {
       return false
     }
 
