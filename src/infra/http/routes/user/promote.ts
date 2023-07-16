@@ -11,7 +11,7 @@ promoteRouter.use(adaptMiddleware(makeEnsureAuthenticatedMiddleware()))
 
 promoteRouter.post('/',
   adaptMiddleware(makeEnsureAcessControllMiddleware({
-    permissions: ['manage_roles']
+    permissions: ['promote_users']
   })),  
   adaptRoute(makePromoteUserController())
 )
