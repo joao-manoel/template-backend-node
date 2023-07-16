@@ -15,7 +15,14 @@ export class GetAllUsersController implements Controller {
 
   async handle(request: ListUsersControllerRequest): Promise<HttpResponse>{
     try {
-      const {skip, take} = request
+      let { skip, take } = request
+      
+      if (!skip) {
+        skip = 0
+      }
+      if (!take) {
+        take = 10
+      }
 
       const result = await this.getAllUsers.execute({skip, take })
 
