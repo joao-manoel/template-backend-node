@@ -14,8 +14,9 @@ const usersRouter = express.Router()
 
 usersRouter.post('/', adaptRoute(makeRegisterUserController()))
 
-usersRouter.use(adaptMiddleware(makeEnsureAuthenticatedMiddleware()))
-usersRouter.get('/', adaptMiddleware(makeEnsureAcessControllMiddleware({
+usersRouter.get('/',
+  adaptMiddleware(makeEnsureAuthenticatedMiddleware()),
+  adaptMiddleware(makeEnsureAcessControllMiddleware({
     permissions: ['view_users']
   })), adaptRoute(makeGetUsersController()))
 
