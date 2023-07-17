@@ -13,9 +13,11 @@ import { roleRouter } from './role/role.route'
 const usersRouter = express.Router()
 
 usersRouter.post('/', adaptRoute(makeRegisterUserController()))
-usersRouter.get('/', adaptMiddleware(makeEnsureAuthenticatedMiddleware()), adaptMiddleware(makeEnsureAcessControllMiddleware({
+
+usersRouter.use(adaptMiddleware(makeEnsureAuthenticatedMiddleware()))
+usersRouter.get('/', adaptMiddleware(makeEnsureAcessControllMiddleware({
     permissions: ['view_users']
-})), adaptRoute(makeGetUsersController()))
+  })), adaptRoute(makeGetUsersController()))
 
 usersRouter.use('/permissions/', permissionsRouter)
 usersRouter.use('/roles', roleRouter)

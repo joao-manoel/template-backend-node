@@ -63,6 +63,12 @@ export const permissions = [
     name: 'manage_roles',
     description: 'Gerenciar Cargos'
   },
+
+  {
+    name: 'view_dashboard',
+    description: 'Visualizar Dashboard'
+  },
+
 ]
 
 export const roles = [
